@@ -1,52 +1,46 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Desafío 1</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desafio Practico 1</title>
 </head>
 <body>
-
-  
-
-    <h2>Agregar Ingreso</h2>
-    <form id="forma-ingreso">        
-        <input type="number" id="valorIngreso" placeholder="Valor (ej. 500)" step="0.01" required>
-        <button type="submit">Agregar</button>
-    </form>
-
-    <h3>Total Ingresos: $<span id="total-ingresosPrev">0.00</span></h3>
-
-    <h2>Agregar Egresos</h2>
-    <form id="forma-egreso">        
-        <input type="number" id="valorEgreso" placeholder="Valor (ej. 500)" step="0.01" required>
-        <button type="submit">Agregar</button>
-    </form>
-
-    <h3>Total Egresos: $<span id="total-egresosPrev">0.00</span></h3>
-
-
-    <button type="button" id="btn-actualizar">Actualizar Resumen</button>
-
-
-    <h1 id="titulo-presupuesto"></h1>
-    <div>Disponible: <span id="monto-disponible"></span></div>
-    <div>Ingresos: <span id="total-ingresos"></span></div>
-    <div>Egresos: <span id="total-egresos"></span></div>
-    <div>Porcentaje de Gastos: <span id="porcentaje-gastos"></span></div>
-
+    <!--Div para el bloque principal donde se resumiria los datos de ingresos y egresos-->
+    <div name="informacion-principal">
+        <h1>Presupuesto</h1>
+        <h2>"fecha"</h2>
+        <ul>
+            <li>Ingresos</li>
+            <li>Egresos</li>
+            <li>Porcentaje de gastos</li>
+        </ul>
+    </div>
     
-    <script src="CalculosMatematicos.js"></script>
-    <script>
-        function actualizarResumen() {
-            document.getElementById("titulo-presupuesto").textContent = tituloFecha();
-            document.getElementById("monto-disponible").textContent = "$" + totalDisponible().toFixed(2);
-            document.getElementById("total-ingresos").textContent = "$" + totalIngresos().toFixed(2);
-            document.getElementById("total-egresos").textContent = "$" + totalEgresos().toFixed(2);
-            document.getElementById("porcentaje-gastos").textContent = calcularPorcentaje() + "%";
-        }
-
-       
-        document.getElementById("btn-actualizar").addEventListener("click", actualizarResumen);
-    </script>
+    <!--Div para el formulario de ingresos de los movimientos-->
+    <div name="ingreso-de-movimientos">
+        <form>
+            <h2>Transaccion</h2>
+            <select name="tipo-de-movimiento">
+                <option value="ingresos">Ingresos</option>
+                <option value="egresos">Egresos</option>
+            </select><br>
+            <input type="text" name="Descripcion" placeholder="Titulo o descripcion" required><br>
+            <input type="number" name="Monto" placeholder="Monto" required><br>
+            <input type="submit" name="Agregar" value="Agregar"><br>
+        </form>
+    </div>
+    
+    <!--Div para la tabla donde se reflejan los movimientos-->
+    <div name="listado-de-movimientos">
+        <ul name="seccion-de-lista">
+            <li> Ingresos
+                <ul></ul>
+            </li>
+            <li> Egresos
+                <ul></ul>
+            </li>
+        </ul>
+    </div>
 </body>
 </html>
