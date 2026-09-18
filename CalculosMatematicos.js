@@ -1,0 +1,84 @@
+
+
+
+
+
+const AppState = { //Estara almacenando todas las transacciones cada ves que se agregan se realiza un push a ingresos y egresos
+    ingresos: [], egresos: []
+};
+//Se crea la clases ingreso y egreso
+class Ingreso {
+    constructor(valor) {
+        this.valor = valor;
+    }
+}
+class Egreso {
+    constructor(valor) {
+        this.valor = valor;
+    }
+}
+
+document.getElementById('forma-ingreso').addEventListener('submit', function(e) {
+    e.preventDefault(); // Evita recargar la página
+
+    // Captura valores de los inputs
+    
+    const valor = parseFloat(document.getElementById('valorIngreso').value);
+
+    // Agrega el nuevo objeto al arreglo AppState.ingresos
+    AppState.ingresos.push(new Ingreso(valor));
+
+    const total = totalIngresos();
+    document.getElementById('total-ingresosPrev').textContent = total.toFixed(2);
+
+});
+
+document.getElementById('forma-egreso').addEventListener('submit', function(e) {
+    e.preventDefault(); // Evita recargar la página
+
+    // Captura valores de los inputs
+    
+    const valor = parseFloat(document.getElementById('valorEgreso').value);
+
+    // Agrega el nuevo objeto al arreglo AppState.egresos
+    AppState.egresos.push(new Egreso(valor));
+
+    const total = totalEgresos();
+    document.getElementById('total-egresosPrev').textContent = total.toFixed(2);
+
+});
+
+
+
+function tituloFecha(){ //Se obtiene el titulo sacando el mes y año de la funcion Date()
+    const fechaHoy=new Date();
+    const mes = ["ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE"];
+    const mesNombre= mes[fechaHoy.getMonth()];
+    const anio = fechaHoy.getFullYear();
+
+    return `Presupuesto de ${mesNombre} ${anio}`; // retorna el titulo ya convertido
+}
+
+function totalIngresos(){
+    return AppState.ingresos.reduce((totalAcumulado, ingreso) => totalAcumulado + ingreso.valor, 0 ); //Realiza el calculo utilizando el arreglo almacenado en AppState sumando el ingreso actual
+
+}
+function totalEgresos(){
+    return AppState.egresos.reduce((totalAcumulado, egreso) => totalAcumulado + egreso.valor, 0 );//Realiza el calculo utilizando el arreglo almacenado en AppState
+
+}
+
+function totalDisponible(){
+    return totalIngresos() - totalEgresos(); // Calcula el total disponible realizando la resta con los totales de ingreso y de egreso
+
+}
+function calcularPorcentaje(){
+    const totIngreso = totalIngresos();
+    const totEgresos = totalEgresos();
+
+    if (totIngreso === 0) return 0;
+
+    const porcent =(totEgresos*100)/ totIngreso;
+    return parseFloat(porcent.toFixed(2));
+}
+
