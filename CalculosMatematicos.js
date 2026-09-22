@@ -46,6 +46,22 @@ document.getElementById('transacciones').addEventListener('submit', function(e) 
 
 //Codigo para las TABS
 
+function listasTab(){
+    const ulIngresos = getElementById('listado-ingresos');
+    ulIngresos.innerHTML = '';
+
+    AppState.Ingreso.array.forEach(ingreso=> {
+       conts lista = document.createElement('lista');
+       lista.textContent = '${ingreso.descripcion} --- $${ingreso.valor.toFixed(2)}';
+       ulIngresos.appendChild(lista);
+       
+    });
+
+
+
+
+}
+
 
 function actualizarResumen() {
         
