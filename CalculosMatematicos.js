@@ -44,6 +44,9 @@ document.getElementById('transacciones').addEventListener('submit', function(e) 
 
 //Finaliza codigo de pruebas
 
+//Codigo para las TABS
+
+
 function actualizarResumen() {
         
             
