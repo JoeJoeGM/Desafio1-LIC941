@@ -5,29 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Desafio Practico 1</title>
 </head>
+
+    
 <body>
     <!--Div para el bloque principal donde se resumiria los datos de ingresos y egresos-->
     <div name="informacion-principal">
-        <h1>Presupuesto</h1>
-        <h2>"fecha"</h2>
+        <h1 id="titulo-presupuesto"></h1> 
         <ul>
-            <li>Ingresos</li>
-            <li>Egresos</li>
-            <li>Porcentaje de gastos</li>
+            <li>Ingresos: $<span id="total-ingresosPrev">0.00</span></li>
+            <li>Egresos: $<span id="total-egresosPrev">0.00</span></li>
+            <li>Monto Disponible: $<span id="monto-disponible">0.00</span></li>
+            <li>Porcentaje de gastos: <span id="porcentaje-gastos"></span></li>
         </ul>
     </div>
     
     <!--Div para el formulario de ingresos de los movimientos-->
     <div name="ingreso-de-movimientos">
-        <form>
+        <form id = "transacciones">
             <h2>Transaccion</h2>
-            <select name="tipo-de-movimiento">
+            <select name="transaccion" id="tipo-movimiento">
                 <option value="ingresos">Ingresos</option>
                 <option value="egresos">Egresos</option>
             </select><br>
-            <input type="text" name="Descripcion" placeholder="Titulo o descripcion" required><br>
-            <input type="number" name="Monto" placeholder="Monto" required><br>
-            <input type="submit" name="Agregar" value="Agregar"><br>
+            <input type="text" id="descripcion" placeholder="Titulo o descripcion" required><br>
+            <input type="number" id="monto" placeholder="Monto" required><br>
+            <input type="submit" id="accion" value="Agregar"><br>
         </form>
     </div>
     
@@ -42,5 +44,13 @@
             </li>
         </ul>
     </div>
+
+    
 </body>
+<script src="CalculosMatematicos.js"></script>
+<script>
+        document.getElementById("titulo-presupuesto").textContent = tituloFecha();
+        document.getElementById("porcentaje-gastos").textContent = calcularPorcentaje() + "%";
+        
+    </script>
 </html>

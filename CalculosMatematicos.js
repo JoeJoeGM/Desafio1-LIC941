@@ -16,37 +16,41 @@ class Egreso {
 }
 
 //Codigo para realizar pruebas
-document.getElementById('forma-ingreso').addEventListener('submit', function(e) {
+
+document.getElementById('transacciones').addEventListener('submit', function(e) {
     e.preventDefault(); // Evita recargar la página
+
+    const tipoMovimiento = document.getElementById('tipo-movimiento').value;
 
     // Captura valores de los inputs
     const descripcion=document.getElementById('descripcion').value;
-    const valor = parseFloat(document.getElementById('valorIngreso').value);
+    const valor = parseFloat(document.getElementById('monto').value);
 
-    // Agrega el nuevo objeto al arreglo AppState.ingresos
-    AppState.ingresos.push(new Ingreso(descripcion,valor));
+    if (tipoMovimiento === 'ingresos'){
 
-    const total = totalIngresos();
-    document.getElementById('total-ingresosPrev').textContent = total.toFixed(2);
+        AppState.ingresos.push(new Ingreso(descripcion, valor));
+        const total = totalIngresos();
+        document.getElementById('total-ingresosPrev').textContent = total.toFixed(2);
 
-});
-
-document.getElementById('forma-egreso').addEventListener('submit', function(e) {
-    e.preventDefault(); // Evita recargar la página
-
-    // Captura valores de los inputs
-    const descripcion=document.getElementById('descripcion').value;
-    const valor = parseFloat(document.getElementById('valorEgreso').value);
-
-    // Agrega el nuevo objeto al arreglo AppState.egresos
-    AppState.egresos.push(new Egreso(descripcion, valor));
-
-    const total = totalEgresos();
-    document.getElementById('total-egresosPrev').textContent = total.toFixed(2);
-
+    }else if (tipoMovimiento === 'egresos') {
+       AppState.egresos.push(new Egreso(descripcion, valor));
+        const total = totalEgresos();
+        document.getElementById('total-egresosPrev').textContent = total.toFixed(2);
+    } 
+    this.reset();
+    document.getElementById("porcentaje-gastos").textContent = calcularPorcentaje() + "%";
+    document.getElementById("monto-disponible").textContent = totalDisponible().toFixed(2);
 });
 
 //Finaliza codigo de pruebas
+
+function actualizarResumen() {
+        
+            
+            document.getElementById("total-ingresos").textContent = "$" + totalIngresos().toFixed(2);
+            document.getElementById("total-egresos").textContent = "$" + totalEgresos().toFixed(2);
+            document.getElementById("porcentaje-gastos").textContent = calcularPorcentaje() + "%";
+        }
 
 function tituloFecha(){ //Se obtiene el titulo sacando el mes y año de la funcion Date()
     const fechaHoy=new Date();
