@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Desafio Practico 1</title>
+    <link rel="StyleSheet" href="StyleSheet.css">
 </head>
 
     
@@ -33,21 +34,11 @@
         </form>
     </div>
     
-    <!--Div para la tabla donde se reflejan los movimientos-->
-    <div name="listado-de-movimientos">
-        <ul name="seccion-de-lista">
-            <li> Ingresos
-                <ul></ul>
-            </li>
-            <li> Egresos
-                <ul></ul>
-            </li>
-        </ul>
-    </div>
+    
     <!--Botones para realizar el cambio de tabs-->
     <div class="botones-tabs">
-        <button type="button" id="boton-ingresos" onclick="cambiarTab('ingresos')">Ingresos</button>
-        <button type="button" id="boton-egresos" onclick="cambiarTab('egresos')">Egresos</button>
+        <button type="button" id="boton-ingresos" onclick="cambiarTab('ingresos')" class="botonTab">Ingresos</button>
+        <button type="button" id="boton-egresos" onclick="cambiarTab('egresos')" class="botonTab">Egresos</button>
     </div>
     <div id="panelIngresos" class="panel">
         <h3>Listado de Ingresos</h3>

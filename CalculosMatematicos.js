@@ -67,13 +67,25 @@ function listasTab(){
        ulEgresos.appendChild(li);
        
     });
-
-
-
-
-
 }
+function cambiarTab(tipoMov){
+    const panelIngreso = document.getElementById('panelIngresos');
+    const panelEgresos = document.getElementById('panelEgresos');
+    const botonIngresos = document.getElementById('boton-ingresos');
+    const botonEgresos = document.getElementById('boton-egresos');
 
+    if (tipoMov === 'ingresos'){
+        panelIngreso.style.display ='block';
+        panelEgresos.style.display = 'none';
+        botonIngresos.classList.add('activo');
+        botonEgresos.classList.remove('activo');
+    }else if(tipoMov === 'egresos'){
+        panelIngreso.style.display ='none';
+        panelEgresos.style.display = 'block';
+        botonIngresos.classList.remove('activo');
+        botonEgresos.classList.add('activo');
+    }
+}
 
 function actualizarResumen() {
         
