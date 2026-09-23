@@ -40,6 +40,7 @@ document.getElementById('transacciones').addEventListener('submit', function(e) 
     this.reset();
     document.getElementById("porcentaje-gastos").textContent = calcularPorcentaje() + "%";
     document.getElementById("monto-disponible").textContent = totalDisponible().toFixed(2);
+    listasTab();
 });
 
 //Finaliza codigo de pruebas
@@ -47,15 +48,26 @@ document.getElementById('transacciones').addEventListener('submit', function(e) 
 //Codigo para las TABS
 
 function listasTab(){
-    const ulIngresos = getElementById('listado-ingresos');
+    const ulIngresos = document.getElementById('listado-ingresos');
     ulIngresos.innerHTML = '';
 
-    AppState.Ingreso.array.forEach(ingreso=> {
-       conts lista = document.createElement('lista');
-       lista.textContent = '${ingreso.descripcion} --- $${ingreso.valor.toFixed(2)}';
-       ulIngresos.appendChild(lista);
+    AppState.ingresos.forEach((ingresos)=> {
+       const li = document.createElement('li');
+       li.textContent = `${ingresos.descripcion} --- $${ingresos.valor.toFixed(2)}`;
+       ulIngresos.appendChild(li);
        
     });
+
+    const ulEgresos = document.getElementById('listado-egresos');
+    ulEgresos.innerHTML = '';
+
+    AppState.egresos.forEach((egresos)=> {
+       const li = document.createElement('li');
+       li.textContent = `${egresos.descripcion} --- $${egresos.valor.toFixed(2)}`;
+       ulEgresos.appendChild(li);
+       
+    });
+
 
 
 
