@@ -2,37 +2,35 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Desafío 1</title>
-    <!-- 1. AQUÍ AGREGAMOS TU CSS -->
+    <title>Desafío 1 - Presupuesto</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <h2>Agregar Ingreso</h2>
-    <form id="forma-ingreso">        
-        <input type="number" id="valorIngreso" placeholder="Valor (ej. 500)" step="0.01" required>
-        <button type="submit">Agregar</button>
-    </form>
+    <h1 id="titulo-presupuesto">Presupuesto</h1>
+    
+    <!-- Resumen -->
+    <div style="background-color: #f1f1f1; padding: 20px; text-align: center; margin-bottom: 20px;">
+        <h2>Disponible: <span id="monto-disponible">$0.00</span></h2>
+        <p>INGRESOS: <span id="total-ingresos">$0.00</span></p>
+        <p>EGRESOS: <span id="total-egresos">$0.00</span></p>
+        <p>Porcentaje de Gastos: <span id="porcentaje-gastos">0%</span></p>
+    </div>
 
-    <h3>Total Ingresos: $<span id="total-ingresosPrev">0.00</span></h3>
+    <!-- Formulario unificado (Corregido para que coincida con el JS y el PDF) -->
+    <div style="text-align: center; margin-bottom: 30px;">
+        <form id="transacciones">        
+            <select id="tipo-movimiento" required>
+                <option value="ingresos">+</option>
+                <option value="egresos">-</option>
+            </select>
+            <input type="text" id="descripcion" placeholder="Agregar Descripción" required>
+            <input type="number" id="monto" placeholder="Valor (ej. 500)" step="0.01" required>
+            <button type="submit">Agregar</button>
+        </form>
+    </div>
 
-    <h2>Agregar Egresos</h2>
-    <form id="forma-egreso">        
-        <input type="number" id="valorEgreso" placeholder="Valor (ej. 500)" step="0.01" required>
-        <button type="submit">Agregar</button>
-    </form>
-
-    <h3>Total Egresos: $<span id="total-egresosPrev">0.00</span></h3>
-
-    <button type="button" id="btn-actualizar">Actualizar Resumen</button>
-
-    <h1 id="titulo-presupuesto"></h1>
-    <div>Disponible: <span id="monto-disponible"></span></div>
-    <div>Ingresos: <span id="total-ingresos"></span></div>
-    <div>Egresos: <span id="total-egresos"></span></div>
-    <div>Porcentaje de Gastos: <span id="porcentaje-gastos"></span></div>
-
-    <!-- 2. AQUÍ PEGAMOS TU PARTE 5 (Pestañas y Listas) -->
+    <!-- TU PARTE 5 (Pestañas y Listas) -->
     <div class="contenedor-detalles">
         <div class="tabs-botones">
             <button id="btn-ingresos" class="tab-btn activo" onclick="mostrarTab('ingresos')">Ingresos</button>
@@ -49,18 +47,5 @@
     </div>
     
     <script src="CalculosMatematicos.js"></script>
-    <script>
-        function actualizarResumen() {
-            document.getElementById("titulo-presupuesto").textContent = tituloFecha();
-            document.getElementById("monto-disponible").textContent = "$" + totalDisponible().toFixed(2);
-            document.getElementById("total-ingresos").textContent = "$" + totalIngresos().toFixed(2);
-            document.getElementById("total-egresos").textContent = "$" + totalEgresos().toFixed(2);
-            
-            // 3. AQUÍ LLAMAMOS A TU FUNCIÓN PARA QUE SE ACTUALICEN LAS LISTAS
-            actualizarListasDetalles();
-        }
-
-        document.getElementById("btn-actualizar").addEventListener("click", actualizarResumen);
-    </script>
 </body>
-</html>
+</html>s
