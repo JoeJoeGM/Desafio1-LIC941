@@ -1,121 +1,134 @@
-const AppState = {
-    ingresos: [], egresos: []
-};
+// Arreglos globales para almacenar las transacciones
+let listaIngresos = [];
+let listaEgresos = [];
 
-class Ingreso {
-    constructor(descripcion, valor) {
-        this.descripcion = descripcion;
-        this.valor = valor;
+// 1. GESTIÓN DINÁMICA DE PESTAÑAS (TABS)
+// Esta función es llamada desde los botones en el HTML (onclick="cambiarTab(...)")
+function cambiarTab(tab) {
+    const panelIngresos = document.getElementById('panelIngresos');
+    const panelEgresos = document.getElementById('panelEgresos');
+    const btnIngresos = document.getElementById('boton-ingresos');
+    const btnEgresos = document.getElementById('boton-egresos');
+
+    if (tab === 'ingresos') {
+        panelIngresos.style.display = 'block';
+        panelEgresos.style.display = 'none';
+        btnIngresos.classList.add('activo');
+        btnEgresos.classList.remove('activo');
+    } else if (tab === 'egresos') {
+        panelIngresos.style.display = 'none';
+        panelEgresos.style.display = 'block';
+        btnEgresos.classList.add('activo');
+        btnIngresos.classList.remove('activo');
     }
 }
 
-class Egreso {
-    constructor(descripcion, valor) {
-        this.descripcion = descripcion;
-        this.valor = valor;
+// 2. EVENTO DEL BOTÓN "AGREGAR" Y VALIDACIONES
+document.getElementById('transacciones').addEventListener('submit', function(evento) {
+    evento.preventDefault(); // Evita que la página se recargue al enviar el formulario
+
+    // Capturar los valores de los inputs usando los IDs del HTML
+    const tipo = document.getElementById('tipo-movimiento').value;
+    const descripcion = document.getElementById('descripcion').value.trim();
+    const monto = parseFloat(document.getElementById('monto').value);
+
+    // Validación de campos: El monto debe ser un número válido y mayor a 0
+    if (isNaN(monto) || monto <= 0) {
+        alert("Por favor, ingrese un monto numérico mayor a 0.");
+        return;
     }
-}
-
-// Inicializar el título al cargar la página
-window.onload = function() {
-    document.getElementById("titulo-presupuesto").textContent = tituloFecha();
-};
-
-document.getElementById('transacciones').addEventListener('submit', function(e) {
-    e.preventDefault(); // Evita recargar la página
-
-    const tipoMovimiento = document.getElementById('tipo-movimiento').value;
-    const descripcion = document.getElementById('descripcion').value;
-    const valor = parseFloat(document.getElementById('monto').value);
-
-    if (tipoMovimiento === 'ingresos'){
-        AppState.ingresos.push(new Ingreso(descripcion, valor));
-    } else if (tipoMovimiento === 'egresos') {
-       AppState.egresos.push(new Egreso(descripcion, valor));
-    } 
     
-    this.reset(); // Limpia el formulario
-    actualizarResumen(); // Llama a actualizar todo
+    if (descripcion === "") {
+        alert("Por favor, ingrese una descripción.");
+        return;
+    }
+
+    // Crear la nueva transacción
+    const nuevaTransaccion = {
+        descripcion: descripcion,
+        monto: monto
+    };
+
+    // Agregar al arreglo correspondiente
+    if (tipo === 'ingresos') {
+        listaIngresos.push(nuevaTransaccion);
+    } else {
+        listaEgresos.push(nuevaTransaccion);
+    }
+
+    // Limpiar los campos del formulario
+    document.getElementById('descripcion').value = '';
+    document.getElementById('monto').value = '';
+
+    // Llamar a la función para actualizar la interfaz
+    pintarDatos();
 });
 
-function actualizarResumen() {
-    document.getElementById("monto-disponible").textContent = "$" + totalDisponible().toFixed(2);
-    document.getElementById("total-ingresos").textContent = "$" + totalIngresos().toFixed(2);
-    document.getElementById("total-egresos").textContent = "$" + totalEgresos().toFixed(2);
-    document.getElementById("porcentaje-gastos").textContent = calcularPorcentaje() + "%";
-    
-    // Llamada a tu función (Parte 5)
-    actualizarListasDetalles();
-}
+// 3. PINTAR DATOS ACTUALIZADOS Y MANIPULACIÓN DEL DOM
+function pintarDatos() {
+    let totalIngresos = 0;
+    let totalEgresos = 0;
 
-function tituloFecha(){
-    const fechaHoy = new Date();
-    const mes = ["ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE"];
-    const mesNombre = mes[fechaHoy.getMonth()];
-    const anio = fechaHoy.getFullYear();
-    return `Presupuesto de ${mesNombre} ${anio}`; 
-}
+    const ulIngresos = document.getElementById('listado-ingresos');
+    const ulEgresos = document.getElementById('listado-egresos');
 
-function totalIngresos(){
-    return AppState.ingresos.reduce((totalAcumulado, ingreso) => totalAcumulado + ingreso.valor, 0 );
-}
+    // Limpiar las listas antes de volver a pintarlas
+    ulIngresos.innerHTML = '';
+    ulEgresos.innerHTML = '';
 
-function totalEgresos(){
-    return AppState.egresos.reduce((totalAcumulado, egreso) => totalAcumulado + egreso.valor, 0 );
-}
-
-function totalDisponible(){ 
-    return totalIngresos() - totalEgresos();
-}
-
-function calcularPorcentaje(){
-    const totIngreso = totalIngresos();
-    const totEgresos = totalEgresos();
-    if (totIngreso === 0) return 0;
-    const porcent = (totEgresos * 100) / totIngreso;
-    return parseFloat(porcent.toFixed(2));
-}
-
-/* =========================================================
-   LÓGICA DE LA PARTE 5 (DETALLES Y PESTAÑAS)
-   ========================================================= */
-
-function mostrarTab(tab) {
-    document.getElementById('tab-ingresos').style.display = 'none';
-    document.getElementById('tab-egresos').style.display = 'none';
-    document.getElementById('btn-ingresos').classList.remove('activo');
-    document.getElementById('btn-egresos').classList.remove('activo');
-    
-    document.getElementById(`tab-${tab}`).style.display = 'block';
-    document.getElementById(`btn-${tab}`).classList.add('activo');
-}
-
-function actualizarListasDetalles() {
-    const contenedorIngresos = document.getElementById('lista-ingresos');
-    const contenedorEgresos = document.getElementById('lista-egresos');
-    let totalIng = totalIngresos();
-
-    contenedorIngresos.innerHTML = '';
-    AppState.ingresos.forEach(ingreso => {
-        contenedorIngresos.innerHTML += `
-            <li>
-                <span>${ingreso.descripcion}</span>
-                <span class="monto-ingreso">+ ${ingreso.valor.toFixed(2)}</span>
-            </li>
-        `;
+    // Pintar Ingresos y sumar el total
+    listaIngresos.forEach(ingreso => {
+        totalIngresos += ingreso.monto;
+        const li = document.createElement('li');
+        li.innerHTML = `${ingreso.descripcion} <span style="float: right;">+ $${ingreso.monto.toFixed(2)}</span>`;
+        ulIngresos.appendChild(li);
     });
 
-    contenedorEgresos.innerHTML = '';
-    AppState.egresos.forEach(egreso => {
-        let porcentaje = totalIng > 0 ? (egreso.valor * 100) / totalIng : 0;
-        contenedorEgresos.innerHTML += `
-            <li>
-                <span>${egreso.descripcion}</span>
-                <div>
-                    <span class="monto-egreso">- ${egreso.valor.toFixed(2)}</span>
-                    <span class="badge-porcentaje">${porcentaje.toFixed(2)}%</span>
-                </div>
-            </li>
-        `;
+    // Pintar Egresos, sumar el total y calcular su porcentaje individual
+    listaEgresos.forEach(egreso => {
+        totalEgresos += egreso.monto;
+        
+        let porcentajeDetalle = 0;
+        if (totalIngresos > 0) {
+            // Fórmula solicitada: %DetalleEgreso = (MontoEgreso * 100) / TotalIngresos 
+            porcentajeDetalle = (egreso.monto * 100) / totalIngresos;
+        }
+
+        const li = document.createElement('li');
+        li.innerHTML = `
+            ${egreso.descripcion} 
+            <span style="float: right;">
+                - $${egreso.monto.toFixed(2)} 
+                <span style="background-color: #264653; color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px; margin-left: 10px;">
+                    ${porcentajeDetalle.toFixed(0)}%
+                </span>
+            </span>`;
+        ulEgresos.appendChild(li);
     });
+
+    // Actualizar los datos del cuadro resumen principal
+    document.getElementById('total-ingresosPrev').textContent = totalIngresos.toFixed(2);
+    document.getElementById('total-egresosPrev').textContent = totalEgresos.toFixed(2);
+    
+    const montoDisponible = totalIngresos - totalEgresos;
+    document.getElementById('monto-disponible').textContent = montoDisponible.toFixed(2);
+
+    // Calcular y actualizar el porcentaje total de gastos
+    let porcentajeTotal = 0;
+    if (totalIngresos > 0) {
+        porcentajeTotal = (totalEgresos * 100) / totalIngresos;
+    }
+    document.getElementById('porcentaje-gastos').textContent = porcentajeTotal.toFixed(2) + "%";
+}
+
+// 4. FUNCIONES AUXILIARES SOLICITADAS POR EL HTML
+// El script al final del index.html llama a estas funciones al cargar la página
+function tituloFecha() {
+    const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+    const fechaActual = new Date();
+    return `Presupuesto de ${meses[fechaActual.getMonth()]} ${fechaActual.getFullYear()}`;
+}
+
+function calcularPorcentaje() {
+    return 0; // Valor inicial al cargar la página
 }
