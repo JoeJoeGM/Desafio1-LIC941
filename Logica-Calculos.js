@@ -28,6 +28,11 @@ document.getElementById('transacciones').addEventListener('submit', function(e) 
     const descripcion=document.getElementById('descripcion').value;
     const valor = parseFloat(document.getElementById('monto').value);
 
+    if (isNaN(valor) || valor <= 0) { // Se valida que el usuario no ingrese montos negativos, mostrando una alerta
+    alert("Por favor, ingrese un monto numérico mayor a 0.");
+    return; // Detiene la ejecución para que no se guarde el error
+}
+
     if (tipoMovimiento === 'ingresos'){ //Si el tipo de movimiento es ingreso se hace push a AppState.ingresos
 
         AppState.ingresos.push({descripcion, valor});
