@@ -58,7 +58,7 @@
 <script src="CalculosMatematicos.js"></script>
 <script>
         document.getElementById("titulo-presupuesto").textContent = tituloFecha();
-        document.getElementById("porcentaje-gastos").textContent = calcularPorcentaje() + "%";
+        document.getElementById("porcentaje-gastos").textContent = calcularPorcentaje().toFixed(2) + "%"
         cambiarTab("ingresos")
     </script>
 </html>
