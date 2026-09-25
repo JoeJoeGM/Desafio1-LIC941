@@ -1,3 +1,18 @@
+/*
+    ENTREGA DE DESAFIO 1
+    INTEGRANTES:
+
+    Cristel Michelle Figueroa Romero - FR232950
+    Joel Ernesto Granados Mejia - GM251189
+    Carlos Eduardo Saavadra Vega - SV253275
+    Alexis Ernesto Hernández Monge - HM253055
+    Fidel Alexander Blanco Ayala - BA220792
+
+
+*/
+
+
+
 const AppState = { //Estara almacenando todas las transacciones cada ves que se agregan se realiza un push a ingresos y egresos
     ingresos: [], egresos: []
 };
