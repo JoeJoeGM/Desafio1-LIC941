@@ -29,7 +29,7 @@
                 <option value="egresos">Egresos</option>
             </select><br>
             <input type="text" id="descripcion" placeholder="Titulo o descripcion" required><br>
-            <input type="number" id="monto" placeholder="Monto" required><br>
+            <input type="number" id="monto" placeholder="Monto" step="0.01" required><br>
             <input type="submit" id="accion" value="Agregar"><br>
         </form>
     </div>
@@ -58,7 +58,7 @@
 <script src="CalculosMatematicos.js"></script>
 <script>
         document.getElementById("titulo-presupuesto").textContent = tituloFecha();
-        document.getElementById("porcentaje-gastos").textContent = calcularPorcentaje() + "%";
-        
+        document.getElementById("porcentaje-gastos").textContent = calcularPorcentaje().toFixed(2) + "%"
+        cambiarTab("ingresos")
     </script>
 </html>

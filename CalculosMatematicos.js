@@ -1,57 +1,44 @@
 const AppState = { //Estara almacenando todas las transacciones cada ves que se agregan se realiza un push a ingresos y egresos
     ingresos: [], egresos: []
 };
-//Se crea la clases ingreso y egreso
-class Ingreso {
-    constructor(descripcion,valor) {
-        this.descripcion = descripcion;
-        this.valor = valor;
-    }
-}
-class Egreso {
-    constructor(descripcion,valor) {
-        this.descripcion = descripcion;
-        this.valor = valor;
-    }
-}
 
-//Codigo para realizar pruebas
 
+//Al dar clic en agregar se capturan los datos y se almacenan en AppState
 document.getElementById('transacciones').addEventListener('submit', function(e) {
-    e.preventDefault(); // Evita recargar la página
+    e.preventDefault(); 
 
-    const tipoMovimiento = document.getElementById('tipo-movimiento').value;
+    const tipoMovimiento = document.getElementById('tipo-movimiento').value; //Toma el tipo de movimiento que se realiza
 
     // Captura valores de los inputs
     const descripcion=document.getElementById('descripcion').value;
     const valor = parseFloat(document.getElementById('monto').value);
 
-    if (tipoMovimiento === 'ingresos'){
+    if (tipoMovimiento === 'ingresos'){ //Si el tipo de movimiento es ingreso se hace push a AppState.ingresos
 
-        AppState.ingresos.push(new Ingreso(descripcion, valor));
-        const total = totalIngresos();
-        document.getElementById('total-ingresosPrev').textContent = total.toFixed(2);
+        AppState.ingresos.push({descripcion, valor});
+        
 
-    }else if (tipoMovimiento === 'egresos') {
-       AppState.egresos.push(new Egreso(descripcion, valor));
-        const total = totalEgresos();
-        document.getElementById('total-egresosPrev').textContent = total.toFixed(2);
+    }else if (tipoMovimiento === 'egresos') { //Si el tipo de movimiento es egresos se hace push a AppState.egresos
+       AppState.egresos.push({descripcion, valor});
+        
     } 
-    this.reset();
-    document.getElementById("porcentaje-gastos").textContent = calcularPorcentaje() + "%";
+    this.reset(); //Borra el formulario
+    document.getElementById('total-ingresosPrev').textContent = totalIngresos().toFixed(2);
+    document.getElementById('total-egresosPrev').textContent = totalEgresos().toFixed(2);
+    document.getElementById("porcentaje-gastos").textContent = calcularPorcentaje().toFixed(2) + "%";
     document.getElementById("monto-disponible").textContent = totalDisponible().toFixed(2);
-    listasTab();
+    listasTab(); //Agrega los elementos al correspondiente tab
 });
 
-//Finaliza codigo de pruebas
+
 
 //Codigo para las TABS
 
 function listasTab(){
     const ulIngresos = document.getElementById('listado-ingresos');
-    ulIngresos.innerHTML = '';
+    ulIngresos.innerHTML = ''; //Limpia las listas 
 
-    AppState.ingresos.forEach((ingresos)=> {
+    AppState.ingresos.forEach((ingresos)=> { //Con el ForEach se revisa cada dato almacenado y lo va agregando a la lista
        const li = document.createElement('li');
        li.textContent = `${ingresos.descripcion} --- $${ingresos.valor.toFixed(2)}`;
        ulIngresos.appendChild(li);
@@ -68,7 +55,7 @@ function listasTab(){
        
     });
 }
-function cambiarTab(tipoMov){
+function cambiarTab(tipoMov){ //Dependiendo del dato que se le da a tipoMov controla los paneles y botones para los tabs
     const panelIngreso = document.getElementById('panelIngresos');
     const panelEgresos = document.getElementById('panelEgresos');
     const botonIngresos = document.getElementById('boton-ingresos');
@@ -87,13 +74,6 @@ function cambiarTab(tipoMov){
     }
 }
 
-function actualizarResumen() {
-        
-            
-            document.getElementById("total-ingresos").textContent = "$" + totalIngresos().toFixed(2);
-            document.getElementById("total-egresos").textContent = "$" + totalEgresos().toFixed(2);
-            document.getElementById("porcentaje-gastos").textContent = calcularPorcentaje() + "%";
-        }
 
 function tituloFecha(){ //Se obtiene el titulo sacando el mes y año de la funcion Date()
     const fechaHoy=new Date();
@@ -123,7 +103,5 @@ function calcularPorcentaje(){
 
     if (totIngreso === 0) return 0;
 
-    const porcent =(totEgresos*100)/ totIngreso; //Se utiliza la formula %Egreso = (totalEgresos * 100) / totalIngresos
-    return parseFloat(porcent.toFixed(2)); //Se utiliza toFixed para redondear las cifras
+    return (totEgresos*100)/ totIngreso; //Se utiliza la formula %Egreso = (totalEgresos * 100) / totalIngresos
 }
-
