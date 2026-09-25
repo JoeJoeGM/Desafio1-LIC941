@@ -87,8 +87,7 @@ function cambiarTab(tipoMov){
     }
 }
 
-function actualizarResumen() {
-        
+function actualizarResumen() {        
             
             document.getElementById("total-ingresos").textContent = "$" + totalIngresos().toFixed(2);
             document.getElementById("total-egresos").textContent = "$" + totalEgresos().toFixed(2);
