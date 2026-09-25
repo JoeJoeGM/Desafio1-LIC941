@@ -10,3 +10,261 @@
 	font-weight: bold;
 	border-top: 2px solid #007bff:
 }
+
+/*Damos color al cuerpo y estilo de letra*/
+
+body{
+    background-color: #f1f3f6;
+    font-family: Arial, sans-serif;
+}
+
+/*Damos color al fondo de la clase y alineamos*/
+div[name="informacion-principal"]{
+    background-color: white;
+    width: 600px;
+    margin: 0 auto;
+    padding: 30px;
+}
+
+div[name="informacion-principal"] h1 {
+    text-align: center;
+    font-size: 30px;
+}
+
+div[name="informacion-principal"] ul {
+    list-style: none;
+    padding: 0;
+}
+
+div[name="informacion-principal"] li {
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 12px;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+/*Damos estilo al contenido de la lista*/
+div[name="informacion-principal"] li:first-child{
+    background-color: #2a9d8f;
+    color: white;
+}
+div[name="informacion-principal"] li:nth-child(2){
+    background-color: #e76f51;
+    color: white;
+}
+div[name="informacion-principal"] li:nth-child(3){
+    background-color: #264653;
+    color: white;
+    font-size: 22px;
+    font-weight: bold;
+    padding: 16px;
+}
+div[name="informacion-principal"]li:nth-child(4){
+    background-color: #f1f3f6;
+    color: #555;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 12px;
+}
+
+/*Damos estilo a la clase*/
+div[name="ingreso-de-movimientos"] h2 {
+    text-align: center;
+    color: #264653;
+    margin-bottom: 15px;
+   
+}
+
+div[name="ingreso-de-movimientos"] select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 15px;
+    margin-bottom: 12px;
+}
+
+#transacciones {
+    background-color: white;
+    width: 600px;
+    margin: 25px auto;
+    padding: 30px;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+/*Usamos el box-sizing:border-box, para que el padding no se salga de la tarjeta*/
+div[name="ingreso-de-movimientos"] input[type="text"],
+div[name="ingreso-de-movimientos"] input[type="number"]{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 15px;
+    margin-bottom: 12px;
+    box-sizing: border-box;
+}
+
+/*Estilo del boton*/
+div[name="ingreso-de-movimientos"] input[type="submit"]{
+    width: 100%;
+    padding: 12px;
+    background-color: #2a9d8f;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+
+}
+/*Efecto del boton todo pro*/
+div[name="ingreso-de-movimientos"] input[type="submit"]:hover {
+    background-color: #21867a;
+}
+
+/*Damos estilo a la clase*/
+div[name="listado-de-movimientos"]{
+    background-color: white;
+    width: 600px;
+    margin: 25px auto;
+    padding: 30px;
+    border-radius: 10px;
+    
+
+}
+
+div[name="listado-de-movimientos"] ul {
+    display: flex;/*Usamos flex para poner lado a lado las listas*/
+    list-style: none;/*Quitamos el estilo de la lista, eliminamos puntos numeros y demas*/
+    padding: 0;
+    margin: 0;
+
+}
+
+div[name="listado-de-movimientos"] > ul > li {
+    flex: 1;
+    text-align: center;
+    padding: 12px;
+    font-weight: bold;
+    cursor: pointer;/*Aparece la manita al pasar el mouse :D*/
+    border-bottom: 3px solid #ddd;
+
+}
+
+div[name="listado-de-movimientos"]>ul>li:first-child{
+    color: #2a9d8f;
+    border-bottom-color: #2a9d8f;
+}
+div[name="listado-de-movimientos"]>ul>li:nth-child(2){
+    color: #e76f51;
+    border-bottom-color: #e76f51;
+}
+
+/*li>ul selecciona unicamente las listas que estan en ingresos y egresos*/
+div[name="listado-de-movimientos"]>ul>li>ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 15px;
+    color: #333;
+    font-weight: normal;
+
+}
+
+div[name="listado-de-movimientos"]> ul > li:hover {
+    background-color: #f1f3f6;
+}
+
+/*Diseño de los botones de pestañas*/
+.botones-tabs{
+	width: 600px;
+	margin: 25px auto 0;
+	display: flex;
+
+}
+.botones-tabs .botonTab{
+	flex: 1;
+	padding:  12px;
+	font-size: 16px;
+	color: #333;
+	background-color: white;
+	border: 1px solid #ddd;
+	border-bottom: none;
+	border-top: 3px solid transparent;
+	cursor: pointer;
+
+}
+
+/*Pestaña de ingresos*/
+#boton-ingresos.activo{
+	border-top-color: #2a9d8f;
+
+}
+
+
+
+/*Pestaña de egreso*/
+#boton-egresos.activo{
+	border-top-color: #e76f51;
+
+}
+
+
+
+/*Efecto de cursor*/
+.botones-tabs .botonTab:hover {
+	background-color: #f1f3f6;
+}
+
+/*Paneles de movimiento*/
+.panel{
+	background-color: white;
+	width: 600px;
+	margin: 0 auto 25px;
+	padding: 25px 30px;
+	box-sizing: border-box;
+	border-radius: 0 0 10px 10px;
+
+}
+
+/*Titulos de listado*/
+.panel h3 {
+	margin-top: 0;
+	color: #264653;
+	font-size: 20px;
+
+}
+/*Listaas de ingreso y egreso*/
+.panel ul{
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.panel li{
+	padding: 12px;
+	margin-bottom: 8px;
+	border: 1px solid #ddd;
+	border-radius: 6px;
+}
+
+
+#panelIngresos h3{
+	color: #2a9d8f;
+}
+
+/*Color orilla izquierda*/
+#panelIngresos li {
+	border-left: 4px solid #2a9d8f;
+
+}
+
+
+#panelEgresos h3 {
+	color: #e76f51;
+}
+
+/*Color orilla izquierda de egresos*/
+#panelEgresos li{
+	border-left: 4px solid #e76f51;
+}
